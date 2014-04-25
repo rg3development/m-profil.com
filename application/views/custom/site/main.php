@@ -24,7 +24,6 @@
 			<?endif;?>
 			<div class="distributors_block">
 				<h3 class="box_title">Наши поставшики:</h3>
-				
 				<div class="slider_wrapper">
 					<span class="slider_prev"></span>
 					<span class="slider_next"></span>
@@ -32,10 +31,10 @@
 					<div class="slider">
 						<ul class="distributors_list">
                         <?foreach($widgets['main_slider1']['items'] as $key1=>$value1):?>
-							<li class="distributor_unit"><a href="#"><img src="<?= base_url('/upload/images/banner/'.$value1['maxi']->getFilename()); ?>" alt=""/></a></li>
+							<li class="distributor_unit"><a href="<?=$value1['item']->link?>"><img src="<?= base_url('/upload/images/banner/'.$value1['maxi']->getFilename()); ?>" alt=""/></a></li>
                         <?endforeach;?> 
                         <?foreach($widgets['main_slider1']['items'] as $key1=>$value1):?>
-							<li class="distributor_unit"><a href="#"><img src="<?= base_url('/upload/images/banner/'.$value1['maxi']->getFilename()); ?>" alt=""/></a></li>
+							<li class="distributor_unit"><a href="<?=$value1['item']->link?>"><img src="<?= base_url('/upload/images/banner/'.$value1['maxi']->getFilename()); ?>" alt=""/></a></li>
                         <?endforeach;?>                         
 						</ul>
 					</div>

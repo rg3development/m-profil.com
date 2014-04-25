@@ -60,7 +60,7 @@ class Catalog_mapper extends MY_Model implements Mapper
     $this->db->where('parent_section_id', $section_id);
     $this->db->where('is_deleted !=', 1);
     $this->db->order_by($order_title, $order_type);
-    return $this->db->get()->result(self::CLASS_CATEGORY);
+    /*return*/ echo '<pre>'; print_r($this->db->get()->result(self::CLASS_CATEGORY)); die;
   }
 
   public function get_category_tree ()
@@ -95,7 +95,16 @@ class Catalog_mapper extends MY_Model implements Mapper
     $this->db->order_by($order_title, $order_type);
     return $this->db->get()->result(self::CLASS_CATEGORY);
   }
-
+  public function get_category_sublist3 ( $category_id = 0, $order_title = 'id', $order_type = 'DESC',$section_id = 14 )
+  {
+    $this->db->select('*');
+    $this->db->from(self::TABLE_CATALOG_CATEGORY);
+    $this->db->where('parent_category_id', $category_id);
+    $this->db->where('parent_section_id', $section_id);
+    $this->db->where('is_deleted !=', 1);
+    $this->db->order_by($order_title, $order_type);
+    return $this->db->get()->result(self::CLASS_CATEGORY);
+  }
   public function get_section_category_tree ( $section_id = 0 )
   {
     $first_level = $this->get_section_category_sublist($section_id, 0);
@@ -1012,7 +1021,7 @@ class Catalog_mapper extends MY_Model implements Mapper
           }
         }
         $user_values   = $this->get_uf_values($section->id, $item_id);
-        $categ = $this->get_category_sublist(0, 'priority', 'ASC');
+        $categ = $this->get_category_sublist3(0, 'priority', 'ASC',$section->id);
         $data = array (
           'item'             => $this->get_object($item_id, 'item'),
           'similar'          => $similar_items,
@@ -1039,7 +1048,7 @@ class Catalog_mapper extends MY_Model implements Mapper
 
       // pagination create: [ $module_config = '', $base_url = '', $total_rows = 0, $per_page = 0 ]
       $paginator = $this->pagination->create('pagination_catalog', $section_url, $total_rows, $count_per_page);
-      $categ = $this->get_category_sublist(0, 'priority', 'ASC');
+      $categ = $this->get_category_sublist3(0, 'priority', 'ASC',$section->id);
 
       $catalog_products = array_splice($catalog_products, (int) $this->input->get('per_page'), $count_per_page);
     }

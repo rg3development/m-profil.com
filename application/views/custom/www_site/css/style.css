@@ -1532,7 +1532,7 @@ input:focus::-moz-placeholder {
     .sidebar {
         position: absolute;
         right: 10px;
-        top: 25px;
+        top: -225px;
         width: 246px;
         background: inherit;
         border: none;

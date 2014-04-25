@@ -3,6 +3,7 @@
 <?if ( isset($_GET['cat'])>0):?>
 <div class="main_row">
     <div class="section_inner mod_sidebar">
+        <div class = 'changePlace'>
         <? if ( isset($categ) && !empty($categ) ) : ?>
             <div class="sidebar">
                 <div class="sidebar_controls">
@@ -73,7 +74,9 @@
                                     <a href="<?= $product->url(); ?>" class="catalog_img_w"><div class="i-border" style="background: url('<?= $product->thumb(); ?>') 50% 50% no-repeat;"></div></a>
                                     <a href="<?= $product->url(); ?>" class="catalog_l_1_caption"><?= $product->title; ?></a>
                                     <div class="catalog_u_description">
-                                        <span class="uprice"><?= $product->price(); ?></span><br /><br />
+                                        <? if($product->price() != '0.00 руб.') : ?>
+                                            <span class="uprice"><?= $product->price(); ?></span><br /><br />
+                                        <? endif; ?>
 										<?= $product->anno; ?>
                                     </div>
                                 </li>
@@ -84,11 +87,13 @@
                 </div>
             <?endif;?>
     </div>
+    </div>
 </div>
 <?elseif ( isset($_GET['item'])>0):?>
 <div class="main_row">
 <?$cater2= $item->category(); ?>
 	<div class="section_inner mod_sidebar">
+        <div class = 'changePlace'>
 		<? if ( isset($categ) && !empty($categ) ) : ?>
             <div class="sidebar">
                 <div class="sidebar_controls">
@@ -133,16 +138,30 @@
             <? if ( isset($user_values) && !empty($user_values) ) : ?>
 			<div class="dimension_block">
                 <div class="uprice2">
-                   Цена: <span><?=$item->price();?></span>
+                    <? if($item->price() != '0.00 руб.') : ?>
+                        Цена: <span><?=$item->price();?></span>
+                    <? endif; ?>
                  </div>
-				<h2 class="dimension_caption">Характеристики</h2>
+
+                <? $flag = false;
+                    foreach ( $user_values as $index => $values ) {
+                    if(!empty($values['value_string']))
+                    {
+                        $flag = true;
+                    }
+                } ?>
+                <? if($flag) : ?>
+				    <h2 class="dimension_caption">Характеристики</h2>
+                <? endif; ?>
 
                 <div class="dimension_caption mod_1" style="padding-bottom: 0px;"></div>
                 <? foreach ( $user_values as $index => $values ) : ?>
+                    <? if(!empty($values['value_string'])) : ?>
                     <dl class="dimensions clearfix">
                         <dt class="dimension_unit"><?=$values['title'];?></dt>
                         <dd class="dimension_value"><?=$values['value_string'];?></dd>
                     </dl>
+                    <? endif; ?>
                 <?endforeach;?>
 
 			</div>
@@ -152,6 +171,7 @@
 
 		</div>
 	</div>
+    </div>
 </div>
 <?else:?>
 <div class="main_row">
